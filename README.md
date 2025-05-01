@@ -50,7 +50,7 @@ a customizable tax rate, multiple shopping carts (including a wishlist), and dyn
 ---
 
 ## 🎥 Demo Video
-📺 [Watch the YouTube Demo](INSERT_YOUTUBE_LINK_HERE)
+📺 [Watch the YouTube Demo](https://youtu.be/4Ca4nIJjWXA)
 
 ---
  
