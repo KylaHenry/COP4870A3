@@ -8,6 +8,9 @@
 
             // Register routes for navigation
             Routing.RegisterRoute("productdetail", typeof(ProductDetailPage));
+
+            Routing.RegisterRoute("taxconfig", typeof(TaxConfigPage));
+
         }
     }
 }

@@ -4,28 +4,44 @@
              x:Class="COP4870.ECommerce.UI.MAUI.InventoryPage"
              Title="Inventory Management">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="10">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="10">
+
+        <!-- Top Buttons -->
         <HorizontalStackLayout Grid.Row="0" Spacing="10">
             <Button Text="Add New Product" Clicked="OnAddProductClicked" />
             <Button Text="Back to Main" Clicked="OnBackClicked" />
+            <Label x:Name="CurrentCartLabel" FontAttributes="Bold"  TextColor="Gray"  HorizontalOptions="Center" Margin="0,10" />
         </HorizontalStackLayout>
 
-        <ListView Grid.Row="1" x:Name="ProductsListView" ItemSelected="OnProductSelected">
+        <!-- Sort Picker -->
+        <Picker x:Name="SortPicker" Grid.Row="1" Title="Sort by" SelectedIndexChanged="OnSortChanged">
+            <Picker.Items>
+                <x:String>Name</x:String>
+                <x:String>Price</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <!-- Product List -->
+        <ListView Grid.Row="2" x:Name="ProductsListView" ItemSelected="OnProductSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid Padding="10" ColumnDefinitions="*, Auto, Auto, Auto">
+                        <Grid Padding="10" ColumnDefinitions="*, Auto, Auto, Auto, Auto">
                             <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="{Binding Price, StringFormat='${0:F2}'}" VerticalOptions="Center" Margin="10,0" />
                             <Label Grid.Column="2" Text="{Binding Quantity, StringFormat='Qty: {0}'}" VerticalOptions="Center" Margin="10,0" />
-                            <Button Grid.Column="3" Text="Add to Cart" CommandParameter="{Binding Id}" Clicked="OnAddToCartClicked" />
+
+                            <!-- Quantity Entry and Button -->
+                            <Entry Grid.Column="3" WidthRequest="50" Placeholder="Qty" Keyboard="Numeric" TextChanged="OnQuantityEntryChanged" />
+                            <Button Grid.Column="4" Text="+" CommandParameter="{Binding Id}" Clicked="OnAddQuantityClicked" />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <Label Grid.Row="2" x:Name="StatusLabel" Text="" HorizontalOptions="Center" Margin="0,10" />
-    </Grid>
+        <!-- Status Message -->
+        <Label Grid.Row="3" x:Name="StatusLabel" Text="" HorizontalOptions="Center" Margin="0,10" />
 
+    </Grid>
 </ContentPage>

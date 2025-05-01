@@ -32,6 +32,14 @@
                 HorizontalOptions="Center" />
 
             <Button
+                x:Name="TaxSettingsBtn"
+                Text="Tax Settings"
+                SemanticProperties.Hint="Adjust sales tax rate"
+                Clicked="OnTaxSettingsClicked"
+                HorizontalOptions="Center" />
+
+
+            <Button
                 x:Name="CheckoutBtn"
                 Text="Checkout"
                 SemanticProperties.Hint="Proceed to checkout"

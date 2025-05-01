@@ -6,66 +6,62 @@ namespace COP4870.ECommerce.Services
 {
     public class ShoppingCartService
     {
-        private readonly List<CartItem> _cartItems = new();
+        private readonly Dictionary<string, List<CartItem>> _carts = new();
+        private string _currentCart = "Main Cart"; // default
 
-        public IReadOnlyList<CartItem> GetCartItems()
+        public ShoppingCartService()
         {
-            return _cartItems.AsReadOnly();
+            _carts[_currentCart] = new List<CartItem>();
         }
+
+        public IEnumerable<string> GetCartNames() => _carts.Keys;
+
+        public string GetCurrentCartName() => _currentCart;
+
+        public void SwitchCart(string cartName)
+        {
+            _currentCart = cartName;
+            if (!_carts.ContainsKey(cartName))
+                _carts[cartName] = new List<CartItem>();
+        }
+
+        public List<CartItem> GetCartItems() => _carts[_currentCart];
 
         public void AddToCart(Product product, int quantity)
         {
-            var existingItem = _cartItems.FirstOrDefault(i => i.Product.Id == product.Id);
-
-            if (existingItem != null)
-            {
-                existingItem.Quantity += quantity;
-            }
+            var cart = _carts[_currentCart];
+            var item = cart.FirstOrDefault(c => c.Product.Id == product.Id);
+            if (item != null)
+                item.Quantity += quantity;
             else
-            {
-                _cartItems.Add(new CartItem
-                {
-                    Product = product,
-                    Quantity = quantity
-                });
-            }
+                cart.Add(new CartItem { Product = product, Quantity = quantity });
         }
 
         public void RemoveFromCart(int productId, int quantity)
         {
-            var existingItem = _cartItems.FirstOrDefault(i => i.Product.Id == productId);
+            var cart = _carts[_currentCart];
+            var item = cart.FirstOrDefault(c => c.Product.Id == productId);
+            if (item == null) return;
 
-            if (existingItem != null)
-            {
-                existingItem.Quantity -= quantity;
-
-                // Remove item completely if quantity is zero or less
-                if (existingItem.Quantity <= 0)
-                {
-                    _cartItems.Remove(existingItem);
-                }
-            }
+            item.Quantity -= quantity;
+            if (item.Quantity <= 0)
+                cart.Remove(item);
         }
 
         public void RemoveAllFromCart(int productId)
         {
-            var existingItem = _cartItems.FirstOrDefault(i => i.Product.Id == productId);
-
-            if (existingItem != null)
-            {
-                _cartItems.Remove(existingItem);
-            }
+            _carts[_currentCart].RemoveAll(c => c.Product.Id == productId);
         }
 
         public int GetQuantityInCart(int productId)
         {
-            var existingItem = _cartItems.FirstOrDefault(i => i.Product.Id == productId);
-            return existingItem?.Quantity ?? 0;
+            return _carts[_currentCart].FirstOrDefault(c => c.Product.Id == productId)?.Quantity ?? 0;
         }
 
         public void ClearCart()
         {
-            _cartItems.Clear();
+            _carts[_currentCart].Clear();
         }
     }
+
 }

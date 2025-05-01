@@ -7,6 +7,7 @@
     <VerticalStackLayout Padding="20">
         <Label Text="Welcome to eCommerce App" FontSize="24" HorizontalOptions="Center"/>
         <Button Text="Inventory" Clicked="OnInventoryClicked"/>
+        <Button Text="Tax Settings" Clicked="OnTaxSettingsClicked" Margin="0,10" BackgroundColor="LightGray" TextColor="Black" />
         <Button Text="Cart" Clicked="OnCartClicked"/>
     </VerticalStackLayout>
 </ContentPage>

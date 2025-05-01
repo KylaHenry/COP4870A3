@@ -23,7 +23,11 @@ public partial class MainPage : ContentPage
     {
         await Shell.Current.GoToAsync("//cart");
     }
+    private async void OnTaxSettingsClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("taxconfig");
 
+    }
     private async void OnCheckoutClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("//checkout");
